@@ -13,7 +13,7 @@ from .tinder_client import TinderClient, LookupStatus
 logger = logging.getLogger(__name__)
 
 _HEADER = "[Tinder Query Result]"
-_CONTACT = "@your_contact"  # ← change this to your TG handle
+_CONTACT = "@tinderbuyeror"  # ← change this to your TG handle
 
 
 def _format_age(reg_date):
