@@ -110,13 +110,11 @@ async def handle_username(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if profile.photo_urls:
         try:
-            for i, url in enumerate(profile.photo_urls[:10]):
-                if i == 0:
-                    await update.message.reply_photo(
-                        photo=url, caption=caption, parse_mode="HTML"
-                    )
-                else:
-                    await update.message.reply_photo(photo=url)
+            await update.message.reply_photo(
+                photo=profile.photo_urls[0],
+                caption=caption,
+                parse_mode="HTML"
+            )
             return
         except Exception as e:
             logger.warning("Photo send failed: %s", e)
