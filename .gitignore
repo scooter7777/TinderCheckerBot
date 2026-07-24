@@ -10,3 +10,16 @@ __pycache__/
 *.plist
 .sh
 *.pkl
+
+# Unrelated project files
+adaptive_predictor.py
+adaptive_state.json
+backtest.py
+collector.py
+monitor.py
+optimize_weights.py
+predict*.py
+supervisor.py
+start_daemons.sh
+run_predictor.sh
+*.md

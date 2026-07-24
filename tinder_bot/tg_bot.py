@@ -13,11 +13,9 @@ from .tinder_client import TinderClient, LookupStatus
 logger = logging.getLogger(__name__)
 
 _HEADER = "[Tinder Query Result]"
-_CONTACT = "@tinderbuyeror"  # ← change this to your TG handle
 
 
 def _format_age(reg_date):
-    """Account age in English format."""
     if not reg_date:
         return "-"
     delta = datetime.datetime.now(tz=datetime.timezone.utc) - reg_date
@@ -32,27 +30,9 @@ def _format_age(reg_date):
     return s
 
 
-def _calc_price(reg_date):
-    """Determine buy price based on account age."""
-    if not reg_date:
-        return None, None
-    days = (datetime.datetime.now(tz=datetime.timezone.utc) - reg_date).days
-    if days < 180:
-        return None, None
-    if reg_date.year < 2025:
-        return 25, "Pre-2025 account"
-    elif reg_date.year == 2025:
-        return 16, "2025 account"
-    elif 180 <= days < 365:
-        return 14, "6-12 months old"
-    return None, None
-
-
 def _format_result(profile):
-    """English result card."""
     reg_line = profile.reg_date.strftime("%Y-%m-%d %H:%M:%S") if profile.reg_date else "-"
     age_line = _format_age(profile.reg_date)
-    price, note = _calc_price(profile.reg_date)
 
     lines = [
         _HEADER,
@@ -66,16 +46,6 @@ def _format_result(profile):
         f"Account Age: {age_line}",
         f"Profile: https://tinder.com/@{profile.username}",
     ]
-
-    # Pricing footer
-    lines.append("")
-    if price:
-        lines.append(f"Estimated Value: ${price}")
-        lines.append(f"Contact: {_CONTACT}")
-    else:
-        lines.append("We only buy accounts older than 6 months.")
-        lines.append(f"Contact: {_CONTACT}")
-
     return "\n".join(lines)
 
 
@@ -83,7 +53,6 @@ def _format_error(username, detail=""):
     msg = f"Lookup failed: @{username}"
     if detail:
         msg += f"\n\n{detail}"
-    msg += f"\n\nContact: {_CONTACT}"
     return msg
 
 
