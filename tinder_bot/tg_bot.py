@@ -38,7 +38,7 @@ def _format_result(profile):
         _HEADER,
         "",
         f"Username: @{profile.username}",
-        f"Status: {profile.status_text}",
+        f"Status: {'🟢 ' if 'Active' in profile.status_text else '🔴 '}{profile.status_text}",
         f"Photos: {len(profile.photo_urls)}",
         f"Name: {profile.name}",
         f"Age: {profile.age}",
