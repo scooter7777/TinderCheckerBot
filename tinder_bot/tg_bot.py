@@ -108,17 +108,6 @@ async def handle_username(update: Update, context: ContextTypes.DEFAULT_TYPE):
     profile = result.profile
     caption = _format_result(profile)
 
-    if profile.photo_urls:
-        try:
-            await update.message.reply_photo(
-                photo=profile.photo_urls[0],
-                caption=caption,
-                parse_mode="HTML"
-            )
-            return
-        except Exception as e:
-            logger.warning("Photo send failed: %s", e)
-
     await update.message.reply_text(caption, parse_mode="HTML")
 
 
