@@ -36,7 +36,7 @@ def _format_result(profile):
 
     lines = [
         _HEADER,
-        f"high price @tinderbuyor",
+        f"high price @tinderbuyeror",
         "",
         f"👤 Username: @{profile.username}",
         f"{'🟢' if 'Active' in profile.status_text else '🔴'} Status: {profile.status_text}",
