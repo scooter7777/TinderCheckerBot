@@ -37,14 +37,14 @@ def _format_result(profile):
     lines = [
         _HEADER,
         "",
-        f"Username: @{profile.username}",
-        f"Status: {'🟢 ' if 'Active' in profile.status_text else '🔴 '}{profile.status_text}",
-        f"Photos: {len(profile.photo_urls)}",
-        f"Name: {profile.name}",
-        f"Age: {profile.age}",
-        f"Registered: {reg_line}",
-        f"Account Age: {age_line}",
-        f"Profile: https://tinder.com/@{profile.username}",
+        f"👤 Username: @{profile.username}",
+        f"{'🟢' if 'Active' in profile.status_text else '🔴'} Status: {profile.status_text}",
+        f"📸 Photos: {len(profile.photo_urls)}",
+        f"✏️ Name: {profile.name}",
+        f"🎂 Age: {profile.age}",
+        f"📅 Registered: {reg_line}",
+        f"⏳ Account Age: {age_line}",
+        f"🔗 Profile: https://tinder.com/@{profile.username}",
     ]
     return "\n".join(lines)
 
