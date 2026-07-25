@@ -87,7 +87,7 @@ async def handle_username(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not username:
         await update.message.reply_text("Could not recognize a Tinder username.")
         return
-    if not username.isalnum() or len(username) > 50:
+    if not re.match(r"^[a-z0-9_]+$", username) or len(username) > 50:
         await update.message.reply_text("Invalid username format.")
         return
 
