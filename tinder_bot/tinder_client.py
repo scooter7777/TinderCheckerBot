@@ -77,22 +77,21 @@ class TinderClient:
     def lookup(self, username: str) -> LookupResult:
         self._wait()
 
-        # 1. Try shieracc API first
-        result = self._call_api(username)
+        # 1. Always scrape tinder.com directly first (live, no cache)
+        web = self._scrape_web(username)
 
-        # 2. If API returned error (限流), try web scrape for details
-        if result.status == LookupStatus.FOUND:
-            profile = result.profile
-            if profile.status_text == "Restricted (Cannot Match)" and not profile.reg_date:
-                web = self._scrape_web(username)
-                if web:
-                    profile.name = web.name
-                    profile.reg_date = web.reg_date
-                    profile.age = web.age
-                    if not profile.photo_urls:
-                        profile.photo_urls = web.photo_urls
+        if web is None:
+            # User not found on tinder.com
+            return LookupResult(LookupStatus.NOT_FOUND)
 
-        return result
+        # 2. Try shieracc only for the Active/Restricted status label
+        api = self._call_api(username)
+        if api.status == LookupStatus.FOUND:
+            web.status_text = api.profile.status_text
+        else:
+            web.status_text = "Active, Normal Matching"
+
+        return LookupResult(LookupStatus.FOUND, profile=web)
 
     # ── shieracc API ─────────────────────────────────────────────────
 
