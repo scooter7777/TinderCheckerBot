@@ -1,6 +1,0 @@
-{$APP_DOMAIN:mail.example.com} {
-	encode gzip
-	@index path / /index.html
-	header @index Cache-Control "no-cache, no-store, must-revalidate"
-	reverse_proxy app:3002
-}

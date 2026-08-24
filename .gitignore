@@ -25,3 +25,17 @@ supervisor.py
 start_daemons.sh
 run_predictor.sh
 *.md
+
+# Unrelated projects in workspace
+build_exe.bat
+build_windows.bat
+ip2location_proxy_checker.py
+mail-hub/
+rental-hub/
+seven-mail/
+start.bat
+trade_hub/
+*.docx
+*.tsv
+查节点.bat
+查节点.command
