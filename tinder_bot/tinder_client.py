@@ -16,11 +16,20 @@ _API_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
     "Origin": "https://vip.shieracc.com",
     "Referer": "https://vip.shieracc.com/",
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    "Pragma": "no-cache",
+    "Expires": "0",
+    "X-Requested-With": "XMLHttpRequest",
 }
 _WEB_UA = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 )
+_WEB_HEADERS = {
+    "User-Agent": _WEB_UA,
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    "Pragma": "no-cache",
+}
 _INTERVAL = 1.5
 
 
@@ -96,8 +105,10 @@ class TinderClient:
             "gender": "", "extra_data": ""
         }).encode()
 
+        # Cache-buster: unique URL each request bypasses any proxy/CDN cache
+        api_url = f"{_API_URL}?_t={int(time.time() * 1000)}"
         req = urllib.request.Request(
-            _API_URL, data=payload, headers=_API_HEADERS
+            api_url, data=payload, headers=_API_HEADERS
         )
 
         try:
@@ -152,7 +163,7 @@ class TinderClient:
     def _scrape_web(self, username: str) -> typing.Optional[TinderProfile]:
         """Scrape tinder.com/@username for name + reg date + photos."""
         url = f"https://tinder.com/@{username}"
-        req = urllib.request.Request(url, headers={"User-Agent": _WEB_UA})
+        req = urllib.request.Request(url, headers=_WEB_HEADERS)
 
         try:
             with urllib.request.urlopen(req, timeout=10) as resp:

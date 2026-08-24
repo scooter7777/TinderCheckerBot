@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-08-02T23:29:42.698482+00:00",
+  "symbol": "BTCUSDT",
+  "mark_price": 63517.79722464,
+  "funding_rate": 0.0001,
+  "open_interest": 109230.981,
+  "taker_ratio": 0.8631,
+  "long_short_ratio": 1.9577,
+  "top_position_ratio": 1.5887,
+  "score": 0.185,
+  "direction": "bullish",
+  "details": {
+    "funding": {
+      "score": 0.0,
+      "note": "资金费率 0.010% 中性"
+    },
+    "oi": {
+      "score": 0.0,
+      "note": "持仓量变化 0.4% 平稳"
+    },
+    "taker": {
+      "score": 0.5,
+      "note": "主动买/卖 1.39, 买盘主导"
+    },
+    "ls": {
+      "score": 0.2,
+      "note": "多空账户比 1.96, 偏多"
+    },
+    "top": {
+      "score": 0.2,
+      "note": "大户持仓比 1.59, 偏多"
+    }
+  },
+  "disclaimer": "基于公开合约数据的量化评分，仅反映资金结构，不构成投资建议。"
+}
