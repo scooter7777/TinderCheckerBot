@@ -102,6 +102,17 @@ async def handle_username(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(_format_error(username, str(e)))
         return
 
+    if result.status == LookupStatus.NOT_FOUND:
+        await update.message.reply_text(
+            "[Tinder Query Result]\n"
+            "high price @tinderbuyeror\n\n"
+            "👤 Username: @" + username + "\n"
+            "🔴 Status: Not Found / Deleted\n"
+            "\n"
+            "Account does not exist or has been deleted."
+        )
+        return
+
     if result.status != LookupStatus.FOUND:
         await update.message.reply_text(result.message or "Unknown error")
         return

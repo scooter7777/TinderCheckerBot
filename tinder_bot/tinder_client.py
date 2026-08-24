@@ -77,21 +77,29 @@ class TinderClient:
     def lookup(self, username: str) -> LookupResult:
         self._wait()
 
-        # 1. Always scrape tinder.com directly first (live, no cache)
+        # 1. Scrape tinder.com directly first (live, no cache)
         web = self._scrape_web(username)
 
-        if web is None:
-            # User not found on tinder.com
-            return LookupResult(LookupStatus.NOT_FOUND)
-
-        # 2. Try shieracc only for the Active/Restricted status label
+        # 2. Try shieracc for the Active/Restricted status
         api = self._call_api(username)
-        if api.status == LookupStatus.FOUND:
-            web.status_text = api.profile.status_text
-        else:
-            web.status_text = "Active, Normal Matching"
 
-        return LookupResult(LookupStatus.FOUND, profile=web)
+        if web is not None:
+            # Account exists on tinder.com
+            if api.status == LookupStatus.FOUND:
+                web.status_text = api.profile.status_text
+            else:
+                web.status_text = "Active, Normal Matching"
+            return LookupResult(LookupStatus.FOUND, profile=web)
+
+        # Account not found on tinder.com - check shieracc status
+        if api.status == LookupStatus.FOUND:
+            return LookupResult(LookupStatus.FOUND, profile=api.profile)
+
+        # Not found everywhere
+        return LookupResult(
+            LookupStatus.NOT_FOUND,
+            message="Account not found or deleted.",
+        )
 
     # ── shieracc API ─────────────────────────────────────────────────
 
